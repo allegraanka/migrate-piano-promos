@@ -10,8 +10,8 @@
     <div>
         <h2>Source Application</h2>
         <ul>
-            <li><input type="text" placeholder="Enter AID" id="aid" value="zUkajvWJ04"/></li>
-            <li><input type="text" placeholder="Enter API_TOKEN" id="apiToken" value="Le171K2HBM05vEWd1drLeGZDLc4Z5FcKQTkPL0Sc"/></li>
+            <li><input type="text" placeholder="Enter AID" id="aid" value=""/></li>
+            <li><input type="text" placeholder="Enter API_TOKEN" id="apiToken" value=""/></li>
             <li><input type="submit" value="Migrate Promotions" id="listPromotions"/></li>
         </ul>
     </div>
@@ -49,8 +49,8 @@
                     }
                     console.log(targetPromotion);
 
-                    var aid = "eBGQWilSFK";
-                    var api_token = "lVgfKJRNHusQp6f4iWf6000UePfs2b5iyg0dzBMm";
+                    var aid = "";
+                    var api_token = "";
                     fetch(`https://cors-anywhere.herokuapp.com/https://sandbox.tinypass.com/api/v3/publisher/promotion/create?aid=${aid}&api_token=${api_token}&name=${targetPromotion.name}&new_customers_only=${targetPromotion.new_customers_only}&discount_type=${targetPromotion.discount_type}&apply_to_all_billing_periods=${targetPromotion.apply_to_all_billing_periods}&can_be_applied_on_renewal=${targetPromotion.can_be_applied_on_renewal}&term_dependency_type=${targetPromotion.term_dependency_type}&percentage_discount=${targetPromotion.percentage_discount}`, { method: 'POST' })
                     .then( (response) => {
                         return response.json();
