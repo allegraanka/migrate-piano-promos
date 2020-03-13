@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migrate-Promotions</title>
+</head>
+<body>
+    <h1>Migrate-Promotions from one application to another</h1>
+    <div>
+        <h2>Source Application</h2>
+        <ul>
+            <li><input type="text" placeholder="Enter AID" id="aid" value="zUkajvWJ04"/></li>
+            <li><input type="text" placeholder="Enter API_TOKEN" id="apiToken" value="Le171K2HBM05vEWd1drLeGZDLc4Z5FcKQTkPL0Sc"/></li>
+            <li><input type="submit" value="Migrate Promotions" id="listPromotions"/></li>
+        </ul>
+    </div>
+
+    <script>
+        var listPromotions = document.getElementById("listPromotions");
+        var aid = document.getElementById("aid").value;
+        var api_token = document.getElementById("apiToken").value;
+
+        listPromotions.addEventListener("click", function() {
+            fetch(`https://cors-anywhere.herokuapp.com/https://api.tinypass.com/api/v3/publisher/promotion/list?aid=${aid}&api_token=${api_token}`, { method: 'POST' })
+            .then( (response) => {
+                return response.json();
+            })
+            .then( (data) => {
+                var sourcePromotions = data.promotions;
+                var targetPromotion;
+
+                console.log(sourcePromotions);
+
+                sourcePromotions.forEach( sourcePromotion => {
+                    targetPromotion = {
+                        aid: sourcePromotion.aid,
+                        name: sourcePromotion.name,
+                        new_customers_only: sourcePromotion.new_customers_only,
+                        percentage_discount: sourcePromotion.percentage_discount,
+                        discount_type: sourcePromotion.discount_type,
+                        unlimited_uses: sourcePromotion.unlimited_uses,
+                        never_allow_zero: sourcePromotion.never_allow_zero,
+                        fixed_promotion_code: sourcePromotion.fixed_promotion_code,
+                        term_dependency_type: sourcePromotion.term_dependency_type,
+                        apply_to_all_billing_periods: sourcePromotion.apply_to_all_billing_periods,
+                        can_be_applied_on_renewal: sourcePromotion.can_be_applied_on_renewal,
+                        
+                    }
+                    console.log(targetPromotion);
+
+                    var aid = "eBGQWilSFK";
+                    var api_token = "lVgfKJRNHusQp6f4iWf6000UePfs2b5iyg0dzBMm";
+                    fetch(`https://cors-anywhere.herokuapp.com/https://sandbox.tinypass.com/api/v3/publisher/promotion/create?aid=${aid}&api_token=${api_token}&name=${targetPromotion.name}&new_customers_only=${targetPromotion.new_customers_only}&discount_type=${targetPromotion.discount_type}&apply_to_all_billing_periods=${targetPromotion.apply_to_all_billing_periods}&can_be_applied_on_renewal=${targetPromotion.can_be_applied_on_renewal}&term_dependency_type=${targetPromotion.term_dependency_type}&percentage_discount=${targetPromotion.percentage_discount}`, { method: 'POST' })
+                    .then( (response) => {
+                        return response.json();
+                    })
+                    .then( (data) => {
+                        console.log("new promos created: ", data);
+                    })
+                });
+            })
+        });
+    </script>
+</body>
+</html>
